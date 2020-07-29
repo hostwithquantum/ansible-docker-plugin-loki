@@ -1,0 +1,41 @@
+---
+- name: Install dependencies
+  yum:
+    name:
+      - curl
+      - jq
+
+# When _docker_loki_version is '', we assume, it's not installed
+- name: Is the Docker loki plugin installed?
+  block:
+    - name: Check version
+      shell: >
+        curl -s
+        --unix-socket /var/run/docker.sock
+        http:/plugins
+        |
+        jq -r '.[]|select(.PluginReference|startswith("docker.io/grafana/loki-docker-driver:"))|.PluginReference'
+      register: _check_version
+      args:
+        warn: false
+      changed_when: false
+
+    - name: Debug
+      debug:
+        var: _check_version
+    
+    - name: Set version
+      set_fact:
+        _docker_loki_version: "{{ _check_version.stdout.split(':')[1] }}"
+      when:
+        - _check_version.stdout != ''
+
+    - name: Set version [not installed]
+      set_fact:
+        _docker_loki_version: ""
+      when:
+        - _check_version.stdout == ''
+
+    - name: Show version
+      debug:
+        var: _docker_loki_version

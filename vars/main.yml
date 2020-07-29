@@ -1,0 +1,5 @@
+---
+# This is not really latest, but more explicit than "loki".
+# A fluent version is needed to be able to run an upgrade
+# and then not get confused about the installed version.
+_docker_loki_alias: loki:latest

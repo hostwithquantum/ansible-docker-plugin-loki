@@ -1,0 +1,19 @@
+---
+- name: Prepare
+  hosts: all
+  roles:
+    - role: atosatto.docker-swarm
+      vars:
+        docker_daemon_config:
+          storage-driver: vfs
+        docker_service_override: |
+          [Service]
+          ExecStart=
+          ExecStart=/usr/bin/dockerd -H unix://
+        skip_cli: False
+        skip_containerd: False
+        skip_docker_compose: True
+        skip_docker_py: True
+        skip_engine: False
+        skip_group: True
+        skip_swarm: True

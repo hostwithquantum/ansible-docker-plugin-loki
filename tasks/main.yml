@@ -1,0 +1,17 @@
+- include_tasks: preflight.yml
+
+- include_tasks: upgrade.yml
+  when:
+    - _docker_loki_version != ""
+    - _docker_loki_version != docker_loki_version
+
+- name: Install loki docker plugin
+  command: >
+    docker plugin install
+    {{ docker_loki_image }}:{{ docker_loki_version }}
+    --alias {{ _docker_loki_alias }}
+    --grant-all-permissions
+  register: loki_install
+  changed_when: false
+  when:
+    - _docker_loki_version == ""

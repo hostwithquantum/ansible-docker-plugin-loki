@@ -1,0 +1,18 @@
+galaxy_info:
+  name: docker-loki
+  author: Richard Wossal, Till Klampaeckel
+  description: Install and update the loki plugin for Docker
+  company: Planetary Quantum GmbH
+  license: BSD-2-Clause
+  min_ansible_version: 2.9
+  platforms:
+  - name: el
+    versions:
+    - 7
+  galaxy_tags:
+  - docker
+  - docker-plugin
+  - loki
+  - logging
+dependencies: []
+  

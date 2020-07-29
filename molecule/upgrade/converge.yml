@@ -1,0 +1,8 @@
+---
+- name: Converge
+  hosts: all
+  gather_facts: no
+  roles:
+    - role: ansible-docker-loki
+      vars:
+        docker_loki_version: 1.5.0

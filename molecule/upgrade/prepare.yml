@@ -1,0 +1,46 @@
+---
+- name: Prepare
+  hosts: all
+  roles:
+    # Install Docker
+    - role: atosatto.docker-swarm
+      vars:
+        docker_daemon_config:
+          storage-driver: vfs
+        docker_service_override: |
+          [Service]
+          ExecStart=
+          ExecStart=/usr/bin/dockerd -H unix://
+        skip_cli: False
+        skip_containerd: False
+        skip_docker_compose: True
+        skip_docker_py: False
+        skip_engine: False
+        skip_group: True
+        skip_swarm: False
+    # Install loki-driver plugin
+    - role: ansible-docker-loki
+      vars:
+        # older tags are prefixed with 'v'
+        docker_loki_version: v1.2.0
+    # Configure loki-driver plugin
+    # TODO: should this be done different?
+    - role: atosatto.docker-swarm
+      vars:
+        docker_daemon_config:
+          storage-driver: vfs
+          log-driver: loki
+        skip_cli: True
+        skip_containerd: True
+        skip_docker_compose: True
+        skip_docker_py: True
+        skip_engine: True
+        skip_group: True
+        skip_swarm: True
+  post_tasks:
+    - name: Start service which sends logs
+      docker_swarm_service:
+        name: random-logger
+        image: chentex/random-logger:latest
+        restart_config:
+          condition: any

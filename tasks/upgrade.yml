@@ -1,0 +1,22 @@
+---
+- name: Disable loki plugin
+  shell:
+    docker plugin disable
+    --force
+    {{ _docker_loki_alias }}
+  args:
+    warn: false
+- name: Upgrade loki plugin
+  shell: >
+    docker plugin upgrade
+    --grant-all-permissions --skip-remote-check
+    {{ _docker_loki_alias }}
+    {{ docker_loki_image }}:{{ docker_loki_version }}
+  args:
+    warn: false
+  notify:
+    - restart docker
+- name: Enable loki plugin
+  command: "docker plugin enable {{ _docker_loki_alias }}"
+  args:
+    warn: false
