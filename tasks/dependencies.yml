@@ -1,0 +1,7 @@
+---
+- name: Install dependencies
+  yum:
+    name:
+      - curl
+      - jq
+  when: ansible_os_family == 'RedHat'

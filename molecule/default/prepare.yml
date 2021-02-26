@@ -1,6 +1,9 @@
 ---
 - name: Prepare
   hosts: all
+  pre_tasks:
+    - name: Update yum
+      command: yum makecache
   roles:
     - role: atosatto.docker-swarm
       vars:

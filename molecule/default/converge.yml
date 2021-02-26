@@ -1,6 +1,6 @@
 ---
 - name: Converge
   hosts: all
-  gather_facts: no
+  gather_facts: yes
   roles:
-    - role: ansible-docker-loki
+    - role: ansible-docker-plugin-loki

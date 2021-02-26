@@ -3,6 +3,8 @@ docker-loki
 
 Install & update the loki plugin for Docker.
 
+Configuration in `daemon.json` is not part of this role, please see [the official documentation](https://github.com/grafana/loki/blob/master/docs/sources/clients/docker-driver/configuration.md#change-the-default-logging-driver).
+
 Requirements
 ------------
 
@@ -36,7 +38,7 @@ Including an example of how to use your role (for instance, with variables passe
 
     - hosts: servers
       roles:
-        - role: ansible-docker-loki
+        - role: ansible-docker-plugin-loki
           vars:
             docker_loki_version: 1.5.0
 

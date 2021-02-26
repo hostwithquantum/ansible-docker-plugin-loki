@@ -1,11 +1,4 @@
 ---
-- name: Install dependencies
-  yum:
-    name:
-      - curl
-      - jq
-  when: ansible_os_family == 'RedHat'
-
 # When _docker_loki_version is '', we assume, it's not installed
 - name: Is the Docker loki plugin installed?
   block:

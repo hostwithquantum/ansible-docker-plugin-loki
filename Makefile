@@ -1,11 +1,11 @@
 SHELL=/bin/bash
 
 IMAGE:=quay.io/ansible/molecule:3.0.4
-ANSIBLE_ROLE:=ansible-docker-loki
+ANSIBLE_ROLE:=ansible-docker-plugin-loki
 OPTS?=--all
 
-.PHONY: test-local
-test-local:
+.PHONY: test
+test:
 	docker run --rm -it \
 		-v "$(CURDIR)":/tmp/$(ANSIBLE_ROLE):ro \
 		-v /var/run/docker.sock:/var/run/docker.sock \

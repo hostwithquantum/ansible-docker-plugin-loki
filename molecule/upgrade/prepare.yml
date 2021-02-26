@@ -1,6 +1,9 @@
 ---
 - name: Prepare
   hosts: all
+  pre_tasks:
+    - name: Update yum
+      command: yum makecache
   roles:
     # Install Docker
     - role: atosatto.docker-swarm
@@ -19,7 +22,7 @@
         skip_group: True
         skip_swarm: False
     # Install loki-driver plugin
-    - role: ansible-docker-loki
+    - role: ansible-docker-plugin-loki
       vars:
         # older tags are prefixed with 'v'
         docker_loki_version: v1.2.0
