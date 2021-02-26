@@ -11,9 +11,9 @@ galaxy_info:
     - 7
   galaxy_tags:
   - docker
-  - docker-plugin
+  - dockerplugin
+  - plugin
   - loki
   - logging
   - grafana
 dependencies: []
-  

@@ -5,7 +5,7 @@
 
 - include_tasks: upgrade.yml
   when:
-    - _docker_loki_version != ""
+    - _docker_loki_version|length > 0
     - _docker_loki_version != docker_loki_version
 
 - name: Install loki docker plugin
@@ -17,4 +17,4 @@
   register: loki_install
   changed_when: false
   when:
-    - _docker_loki_version == ""
+    - _docker_loki_version|length == 0

@@ -17,18 +17,18 @@
     - name: Debug
       debug:
         var: _check_version
-    
+
     - name: Set version
       set_fact:
         _docker_loki_version: "{{ _check_version.stdout.split(':')[1] }}"
       when:
-        - _check_version.stdout != ''
+        - _check_version.stdout|length > 0
 
     - name: Set version [not installed]
       set_fact:
         _docker_loki_version: ""
       when:
-        - _check_version.stdout == ''
+        - _check_version.stdout|length == 0
 
     - name: Show version
       debug:

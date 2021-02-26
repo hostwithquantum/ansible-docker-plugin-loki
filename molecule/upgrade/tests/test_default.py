@@ -20,11 +20,15 @@ def test_loki_plugin_is_installed(host):
 
 
 def test_loki_plugin_version(host):
+    ref = "docker.io/grafana/loki-docker-driver"
+    item = ".PluginReference"
+
     cmd = []
     cmd.append("curl -s --unix-socket /var/run/docker.sock")
     cmd.append("http:/plugins")
     cmd.append("|")
-    cmd.append("jq -r '.[]|select(.PluginReference|startswith(\"docker.io/grafana/loki-docker-driver:\"))|.PluginReference'")
+    cmd.append("jq -r")
+    cmd.append("'.[]|select(%s|startswith(\"%s:\"))|%s'" % (item, ref, item))
 
     output = host.run(" ".join(cmd))
 

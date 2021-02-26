@@ -1,13 +1,12 @@
 ---
 - name: Disable loki plugin
-  shell:
-    docker plugin disable
-    --force
-    {{ _docker_loki_alias }}
+  command: "docker plugin disable --force {{ _docker_loki_alias }}"
   args:
     warn: false
+  tags:
+    - skip_ansible_lint
 - name: Upgrade loki plugin
-  shell: >
+  command: >
     docker plugin upgrade
     --grant-all-permissions --skip-remote-check
     {{ _docker_loki_alias }}
@@ -16,7 +15,11 @@
     warn: false
   notify:
     - restart docker
+  tags:
+    - skip_ansible_lint
 - name: Enable loki plugin
   command: "docker plugin enable {{ _docker_loki_alias }}"
   args:
     warn: false
+  tags:
+    - skip_ansible_lint
