@@ -1,4 +1,4 @@
-docker-loki
+docker-plugin-loki
 =========
 
 Install & update the loki plugin for Docker.
@@ -37,8 +37,9 @@ Example Playbook
 Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
 
     - hosts: servers
+      become: true
       roles:
-        - role: ansible-docker-plugin-loki
+        - role: hostwithquantum.dockerpluginloki
           vars:
             docker_loki_version: 1.5.0
 

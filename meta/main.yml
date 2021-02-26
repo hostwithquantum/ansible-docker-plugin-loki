@@ -1,5 +1,5 @@
 galaxy_info:
-  name: docker-plugin-loki
+  role_name: dockerpluginloki
   author: Richard Wossal, Till Klampaeckel
   description: Install and update the loki plugin for Docker
   company: Planetary Quantum GmbH
