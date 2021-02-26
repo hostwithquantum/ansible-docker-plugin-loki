@@ -1,0 +1,31 @@
+---
+on:
+  pull_request:
+
+name: ci
+
+jobs:
+  molecule-default:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          path: "${{ github.repository }}"
+      - name: molecule test
+        uses: robertdebock/molecule-action@2.6.1
+        with:
+          scenario: default
+          image: centos
+          tag: 7
+  molecule-upgrade:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          path: "${{ github.repository }}"
+      - name: molecule test
+        uses: robertdebock/molecule-action@2.6.1
+        with:
+          scenario: upgrade
+          image: centos
+          tag: 7
