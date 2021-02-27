@@ -4,6 +4,13 @@
   pre_tasks:
     - name: Update yum
       command: yum makecache
+      args:
+        warn: false
+    - name: Install dependencies
+      yum:
+        name:
+          - curl
+          - jq
   roles:
     - role: atosatto.docker-swarm
       vars:
