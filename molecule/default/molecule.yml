@@ -14,7 +14,6 @@ platforms:
     tmpfs:
       - /run
       - /tmp
-      - /var/cache
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
 provisioner:

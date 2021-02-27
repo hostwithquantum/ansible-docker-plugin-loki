@@ -23,7 +23,7 @@
         skip_cli: False
         skip_containerd: False
         skip_docker_compose: True
-        skip_docker_py: True
+        skip_docker_py: False
         skip_engine: False
         skip_group: True
         skip_swarm: True
