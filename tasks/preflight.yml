@@ -1,35 +1,47 @@
 ---
 # When _docker_loki_version is '', we assume, it's not installed
-- name: Is the Docker loki plugin installed?
-  block:
-    - name: Check version
+- name: Check version
+  shell: >
+    curl -s
+    --unix-socket /var/run/docker.sock
+    http://localhost/plugins
+    |
+    jq -r '.[]|select(.PluginReference|startswith("{{ _docker_loki_api_ref }}"))|.PluginReference'
+  register: _check_version
+  args:
+    warn: false
+  changed_when: false
+
+- name: Debug
+  debug:
+    var: _check_version
+
+- name: Set version
+  set_fact:
+    _docker_loki_version: "{{ _check_version.stdout.split(':')[1] }}"
+  when:
+    - _check_version.stdout|length > 0
+
+- name: Show version
+  debug:
+    var: _docker_loki_version
+
+- block:
+    - name: Is it disabled?
       shell: >
         curl -s
         --unix-socket /var/run/docker.sock
         http://localhost/plugins
         |
-        jq -r '.[]|select(.PluginReference|startswith("docker.io/grafana/loki-docker-driver:"))|.PluginReference'
-      register: _check_version
+        jq -r '.[]|select(.PluginReference|startswith("{{ _docker_loki_api_ref }}"))|.PluginReference'
+      register: _check_disabled
       args:
         warn: false
       changed_when: false
-
-    - name: Debug
-      debug:
-        var: _check_version
-
-    - name: Set version
+    - name: Update _docker_loki_disabled fact
       set_fact:
-        _docker_loki_version: "{{ _check_version.stdout.split(':')[1] }}"
-      when:
-        - _check_version.stdout|length > 0
-
-    - name: Set version [not installed]
-      set_fact:
-        _docker_loki_version: ""
-      when:
-        - _check_version.stdout|length == 0
-
-    - name: Show version
+        _docker_loki_disabled: "{{ _check_disabled.stdout|bool }}
+    - name: Show plugin status
       debug:
-        var: _docker_loki_version
+        var: _docker_loki_disabled
+  when: _docker_loki_version|length > 0

@@ -3,3 +3,6 @@
 # A fluent version is needed to be able to run an upgrade
 # and then not get confused about the installed version.
 _docker_loki_alias: loki:latest
+_docker_loki_api_ref: "docker.io/grafana/loki-docker-driver:"
+_docker_loki_disabled: false
+_docker_loki_version: ""
