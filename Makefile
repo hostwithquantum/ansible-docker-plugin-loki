@@ -11,6 +11,10 @@ RUN_CMD:=docker run --rm -it \
 	--env MOLECULE_NO_LOG=no \
 	$(IMAGE)
 
+.PHONY: lint
+lint:
+	docker run -it --rm -v $(CURDIR):/work -w /work alpine/flake8:3.5.0 ./library
+
 .PHONY: test
 test:
 	$(RUN_CMD) molecule test $(OPTS)
