@@ -4,6 +4,13 @@
   pre_tasks:
     - name: Update yum
       command: yum makecache
+      args:
+        warn: false
+    - name: Install dependencies
+      yum:
+        name:
+          - curl
+          - jq
   roles:
     - role: atosatto.docker-swarm
       vars:
@@ -16,7 +23,7 @@
         skip_cli: False
         skip_containerd: False
         skip_docker_compose: True
-        skip_docker_py: True
+        skip_docker_py: False
         skip_engine: False
         skip_group: True
         skip_swarm: True

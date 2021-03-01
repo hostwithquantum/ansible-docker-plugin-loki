@@ -8,14 +8,8 @@ Configuration in `daemon.json` is not part of this role, please see [the officia
 Requirements
 ------------
 
-Installed by this role:
-
- - cURL
- - jq
-
-Not installed by this role:
-
- - Docker
+  - [docker/docker-py](https://pypi.org/project/docker/)
+  - dockerd, e.g. via [atosatto/dockerswarm](https://github.com/atosatto/ansible-dockerswarm/)
 
 Role Variables
 --------------
