@@ -3,3 +3,4 @@
   service:
     name: "{{ docker_loki_docker_unit }}"
     state: restarted
+  become: true

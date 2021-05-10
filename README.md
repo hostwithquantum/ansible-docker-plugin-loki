@@ -28,14 +28,16 @@ n/a
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+Use the role like so:
 
     - hosts: servers
-      become: true
       roles:
         - role: hostwithquantum.dockerpluginloki
           vars:
             docker_loki_version: 1.5.0
+
+
+On `become: true`: The role assumes a reasonable Docker setup where `root` is only required to restart `dockerd`. Ansible will need to be able to _sudo up_ to perform the restart after installation or upgrade. All other interactions (e.g. `docker plugin install`) should work as non-root user. If you use Docker as `root`, you may have to add `become: true` in your playbook.
 
 License
 -------
