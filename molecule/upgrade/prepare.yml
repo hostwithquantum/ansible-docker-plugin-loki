@@ -6,7 +6,7 @@
       command: yum makecache
       args:
         warn: false
-    - name: Install dependencies
+    - name: Install test dependencies
       yum:
         name:
           - curl
@@ -27,13 +27,8 @@
           [Service]
           ExecStart=
           ExecStart=/usr/bin/dockerd -H unix://
-        skip_cli: False
-        skip_containerd: False
         skip_docker_compose: True
-        skip_docker_py: False
-        skip_engine: False
         skip_group: True
-        skip_swarm: False
     # Install loki-driver plugin
     - role: ansible-docker-plugin-loki
       vars:

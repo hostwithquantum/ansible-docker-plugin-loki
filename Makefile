@@ -22,4 +22,4 @@ test:
 
 .PHONY: shell
 shell:
-	$(RUN_CMD) sh
+	$(RUN_CMD) $(IMAGE) sh
