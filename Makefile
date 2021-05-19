@@ -1,6 +1,6 @@
 SHELL=/bin/bash
 
-IMAGE:=quay.io/ansible/molecule:3.0.4
+IMAGE:=quay.io/ansible/molecule:3.1.4
 ANSIBLE_ROLE:=ansible-docker-plugin-loki
 MOLECULE_NO_LOG?=no
 OPTS?=--all
@@ -18,7 +18,7 @@ test:
 	$(RUN_CMD) \
 	-v /var/run/docker.sock:/var/run/docker.sock \
 	--env MOLECULE_NO_LOG=$(MOLECULE_NO_LOG) \
-	$(IMAGE) molecule test $(OPTS)
+	$(IMAGE) molecule --debug test $(OPTS)
 
 .PHONY: shell
 shell:
