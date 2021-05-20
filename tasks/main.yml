@@ -6,16 +6,6 @@
     - _loki_plugin.installed
     - _loki_plugin.version != docker_loki_version
 
-- name: Install loki docker plugin
-  loki_setup:
-    name: "{{ _docker_loki_alias }}"
-    version: "{{ docker_loki_image }}:{{ docker_loki_version }}"
-    state: install
-  register: _loki_install
-  notify:
-    - restart docker
-  when: not _loki_plugin.installed
-
-- name: Show install
-  debug:
-    var: _loki_install
+- include_tasks: install.yml
+  when:
+    - not _loki_plugin.installed

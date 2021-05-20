@@ -20,7 +20,10 @@ platforms:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
 provisioner:
   name: ansible
+  # options:
+  #   vvv: true
 verifier:
   name: testinfra
-  options:
-    vvv: true
+  # options:
+  #   s: true
+  #   vvv: true

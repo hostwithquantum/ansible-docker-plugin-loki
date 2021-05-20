@@ -9,6 +9,8 @@ from ansible.module_utils.basic import AnsibleModule
 
 # code dependencies
 import docker
+from docker.errors import DockerException
+from docker.models.plugins import Plugin
 
 
 def run_module():
@@ -35,16 +37,17 @@ def run_module():
 
     result['name'] = module.params['name']
 
-    client = docker.from_env()
+    client = docker.from_env()  # type: docker.client.DockerClient
 
     try:
-        plugin = client.plugins.get(module.params['name'])
+        plugin = client.plugins.get(module.params['name'])  # type: Plugin
+
         result['installed'] = True
         result['disabled'] = not plugin.enabled
         result['ref'] = plugin.attrs['PluginReference']
         result['version'] = result['ref'].split(':')[1]
 
-    except docker.errors.DockerException:
+    except DockerException:
         result['installed'] = False
 
     module.exit_json(**result)

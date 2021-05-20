@@ -37,5 +37,11 @@ def test_loki_plugin_version(host):
 
 
 def test_logging_container(host):
+    output = host.run("docker service inspect --pretty random-logger")
+    print(output.stdout)
+
+    ps = host.run("docker ps -a")
+    print(ps.stdout)
+
     containers = host.docker.get_containers(status="running")
     assert len(containers) == 1
