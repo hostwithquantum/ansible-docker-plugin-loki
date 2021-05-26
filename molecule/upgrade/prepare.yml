@@ -6,45 +6,48 @@
       command: yum makecache
       args:
         warn: false
-    - name: Install dependencies
+    - name: Install test dependencies
       yum:
         name:
           - curl
           - jq
-  roles:
-    # Install Docker
-    - role: atosatto.docker-swarm
+          - python-pip
+    - name: Pre-install a docker requirement (workaround for python2 and docker=4.4.4)
+      pip:
+        name: websocket-client
+        version: "<1"
+  tasks:
+    - include_role:
+        name: atosatto.docker-swarm-base
       vars:
         docker_daemon_config:
           storage-driver: vfs
+        docker_py_package_version: 4.4.4
         docker_service_override: |
           [Service]
           ExecStart=
           ExecStart=/usr/bin/dockerd -H unix://
-        skip_cli: False
-        skip_containerd: False
-        skip_docker_compose: True
         skip_docker_py: False
-        skip_engine: False
+        skip_docker_compose: True
         skip_group: True
-        skip_swarm: False
-    # Install loki-driver plugin
-    - role: ansible-docker-plugin-loki
+    - import_role:
+        name: ansible-docker-plugin-loki
       vars:
-        # older tags are prefixed with 'v'
         docker_loki_version: v1.2.0
-    # Configure loki-driver plugin
     # TODO: should this be done different?
-    - role: atosatto.docker-swarm
+    - include_role:
+        name: atosatto.docker-swarm
       vars:
         docker_daemon_config:
           storage-driver: vfs
           log-driver: loki
+          log-opts:
+            loki-url: "http://127.0.0.1"
+            loki-batch-size: "400"
         skip_cli: True
         skip_containerd: True
         skip_docker_compose: True
         skip_docker_py: True
-        skip_engine: True
         skip_group: True
         skip_swarm: True
   post_tasks:

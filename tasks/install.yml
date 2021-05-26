@@ -1,0 +1,13 @@
+---
+- name: Install loki docker plugin
+  loki_setup:
+    name: "{{ _docker_loki_alias }}"
+    version: "{{ docker_loki_image }}:{{ docker_loki_version }}"
+    state: install
+  register: _loki_install
+  notify:
+    - restart docker
+
+- name: Show install
+  debug:
+    var: _loki_install

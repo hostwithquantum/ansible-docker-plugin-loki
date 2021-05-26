@@ -12,7 +12,7 @@ jobs:
         with:
           path: "${{ github.repository }}"
       - name: molecule test
-        uses: robertdebock/molecule-action@2.6.1
+        uses: robertdebock/molecule-action@2.6.16
         with:
           scenario: default
           image: centos
@@ -24,7 +24,7 @@ jobs:
         with:
           path: "${{ github.repository }}"
       - name: molecule test
-        uses: robertdebock/molecule-action@2.6.1
+        uses: robertdebock/molecule-action@2.6.16
         with:
           scenario: upgrade
           image: centos
